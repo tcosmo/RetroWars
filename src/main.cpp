@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
+#include <string>
+#include "map.h"
 
 int main() {
   SDL_Window* screen =
@@ -8,6 +10,9 @@ int main() {
 
   SDL_Renderer* renderer =
       SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED);
+
+	const std::string map_tmx_path = "abc";
+	Map map = Map::from_tmx(map_tmx_path);
 
   bool is_running = true;
   SDL_Event ev;

@@ -15,15 +15,9 @@ int main() {
   SDL_Renderer* renderer =
       SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED);
 
-	const std::string map_tmx_path = "abc";
+	const std::string map_tmx_path = "./assets/maps/island_versus.tmx";
 	Map map = Map::from_tmx(map_tmx_path);
 	map.log();
-
-	TileDimension foo;
-	std::cout << foo << std::endl;
-
-	PixelDimension bar(420, 69);
-	std::cout << bar << std::endl;
 
   bool is_running = true;
   SDL_Event ev;

@@ -9,9 +9,22 @@ static MapLayer parse_layer_from_csv_matrix(std::string csv_matrix);
 static MapLine parse_line_from_csv_line(std::string csv_line);
 
 Map Map::from_tmx(const std::string tmx_path) {
-	Map map;
+	using namespace tinyxml2;
 
-	return map;
+	XMLDocument map_xml;
+	map_xml.LoadFile(tmx_path.c_str());
+
+  // Extract metadata
+  XMLElement* root = map_xml.FirstChildElement("map");
+  TileDimension map_shape = {atoi(root->Attribute("width")),
+                                  atoi(root->Attribute("height"))};
+  PixelDimension map_src_tileshape = {atoi(root->Attribute("tilewidth")),
+                                       atoi(root->Attribute("tileheight"))};
+
+
+	std::vector<MapLayer> layers;
+
+	return Map(layers, map_shape, map_src_tileshape);
 }
 
 static void print_map_layer(MapLayer layer);

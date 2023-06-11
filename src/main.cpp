@@ -1,7 +1,11 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
+
+#include <iostream>
 #include <string>
+
 #include "map.h"
+#include "geometry.h"
 
 int main() {
   SDL_Window* screen =
@@ -13,6 +17,10 @@ int main() {
 
 	const std::string map_tmx_path = "abc";
 	Map map = Map::from_tmx(map_tmx_path);
+
+	Dimension foo(69, 42);
+
+	std::cout << foo << std::endl;
 
   bool is_running = true;
   SDL_Event ev;

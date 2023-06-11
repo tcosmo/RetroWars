@@ -19,8 +19,10 @@ int main() {
 	Map map = Map::from_tmx(map_tmx_path);
 
 	TileDimension foo;
-
 	std::cout << foo << std::endl;
+
+	PixelDimension bar(420, 69);
+	std::cout << bar << std::endl;
 
   bool is_running = true;
   SDL_Event ev;

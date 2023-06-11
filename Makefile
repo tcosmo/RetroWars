@@ -14,6 +14,7 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS := $(INC_FLAGS) -MMD -MP -Wall -Wextra -pedantic -g
+CPPFLAGS += -std=c++20
 
 # Linking
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

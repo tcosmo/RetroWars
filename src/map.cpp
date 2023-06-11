@@ -1,8 +1,9 @@
 #include "map.h"
 
+#include <iostream>
+#include <iomanip>
 #include "third_party_lib/tinyxml2.h"
 
-typedef std::vector<int> MapLine;
 
 static MapLayer parse_layer_from_csv_matrix(std::string csv_matrix);
 static MapLine parse_line_from_csv_line(std::string csv_line);
@@ -11,4 +12,36 @@ Map Map::from_tmx(const std::string tmx_path) {
 	Map map;
 
 	return map;
+}
+
+static void print_map_layer(MapLayer layer);
+static void print_map_line(MapLine line);
+
+void Map::log() {
+	std::cout << "Map shape tilewise\t" << shape << std::endl;
+	std::cout << "Source tile shape\t" << src_tileshape << std::endl;
+	if (layers.size() == 0)
+	{
+		std::cout << "Map is empty" << std::endl;
+		return;
+	}
+
+	for (size_t layer_idx = 0; layer_idx < layers.size(); layer_idx++) {
+		std::cout << "Layer " << layer_idx << "\n";
+		print_map_layer(layers.at(layer_idx));
+	}
+}
+
+static void print_map_layer(MapLayer layer) {
+	for (size_t line_idx = 0; layer.size(); line_idx++) {
+		print_map_line(layer.at(line_idx));
+	}
+	std::cout << std::endl;
+}
+
+static void print_map_line(MapLine line) {
+	for (size_t cell_idx = 0; cell_idx < line.size(); cell_idx++) {
+		std::cout << std::setw(3) << line.at(cell_idx) << " ";
+	}
+	std::cout << "\n";
 }

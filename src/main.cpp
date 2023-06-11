@@ -17,6 +17,7 @@ int main() {
 
 	const std::string map_tmx_path = "abc";
 	Map map = Map::from_tmx(map_tmx_path);
+	map.log();
 
 	TileDimension foo;
 	std::cout << foo << std::endl;

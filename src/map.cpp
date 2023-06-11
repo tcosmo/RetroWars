@@ -7,7 +7,7 @@
 
 using namespace tinyxml2;
 
-static std::vector<MapLayer> parse_layers_from_list(XMLElement* head);
+static std::vector<MapLayer> parse_layers_from_list(const XMLElement* head);
 
 Map Map::from_tmx(const std::string tmx_path) {
 
@@ -15,14 +15,14 @@ Map Map::from_tmx(const std::string tmx_path) {
 	map_xml.LoadFile(tmx_path.c_str());
 
   // Extract metadata
-  XMLElement* root = map_xml.FirstChildElement("map");
-  TileDimension map_shape = {atoi(root->Attribute("width")),
+  const XMLElement* root = map_xml.FirstChildElement("map");
+  const TileDimension map_shape = {atoi(root->Attribute("width")),
                                   atoi(root->Attribute("height"))};
-  PixelDimension map_src_tileshape = {atoi(root->Attribute("tilewidth")),
+  const PixelDimension map_src_tileshape = {atoi(root->Attribute("tilewidth")),
                                        atoi(root->Attribute("tileheight"))};
 
 	// Extract map layers
-	std::vector<MapLayer> layers = parse_layers_from_list(
+	const std::vector<MapLayer> layers = parse_layers_from_list(
 			root->FirstChildElement("layer"));
 
 	return Map(layers, map_shape, map_src_tileshape);
@@ -31,12 +31,12 @@ Map Map::from_tmx(const std::string tmx_path) {
 static MapLayer parse_layer_from_csv_sheet(const char* csv_sheet);
 static MapLine parse_line_from_csv_line(const char* csv_line);
 
-static std::vector<MapLayer> parse_layers_from_list(XMLElement* head) {
+static std::vector<MapLayer> parse_layers_from_list(const XMLElement* head) {
 	std::vector<MapLayer> layers;
 
 	while (head != NULL) {
 		const char* current_layer_csv = head->FirstChildElement("data")->GetText();
-    MapLayer current_layer = parse_layer_from_csv_sheet(current_layer_csv);
+    const MapLayer current_layer = parse_layer_from_csv_sheet(current_layer_csv);
 		layers.push_back(current_layer);
 
 		head = head->NextSiblingElement();
@@ -55,7 +55,7 @@ static MapLayer parse_layer_from_csv_sheet(const char* csv_sheet) {
   str_line = strtok_r((char*)csv_sheet, line_delim, &mem);
 
   while (str_line != NULL) {
-    MapLine map_line = parse_line_from_csv_line(str_line);
+    const MapLine map_line = parse_line_from_csv_line(str_line);
     output.push_back(map_line);
 
     str_line = strtok_r(NULL, line_delim, &mem);
@@ -82,10 +82,10 @@ static MapLine parse_line_from_csv_line(const char* csv_line) {
   return output;
 }
 
-static void print_map_layer(MapLayer layer);
-static void print_map_line(MapLine line);
+static void print_map_layer(const MapLayer layer);
+static void print_map_line(const MapLine line);
 
-void Map::log() {
+void Map::log() const {
 	std::cout << "Map shape tilewise\t" << shape << std::endl;
 	std::cout << "Source tile shape\t" << src_tileshape << std::endl;
 	if (layers.size() == 0)
@@ -100,14 +100,14 @@ void Map::log() {
 	}
 }
 
-static void print_map_layer(MapLayer layer) {
+static void print_map_layer(const MapLayer layer) {
 	for (auto & line : layer) {
 		print_map_line(line);
 	}
 	std::cout << std::endl;
 }
 
-static void print_map_line(MapLine line) {
+static void print_map_line(const MapLine line) {
 	for (auto & cell : line) {
 		std::cout << std::setw(3) << cell << " ";
 	}

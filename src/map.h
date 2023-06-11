@@ -14,7 +14,7 @@ class Map {
       PixelDimension src_tileshape)
       : layers{layers}, shape{shape}, src_tileshape{src_tileshape} {};
   static Map from_tmx(const std::string tmx_path);
-  void log();
+  void log() const;
 
   std::vector<MapLayer> layers;
   TileDimension shape;
